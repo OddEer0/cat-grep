@@ -3,7 +3,8 @@ CFLAGS=-Wall -Werror -Wextra
 RESULT=grep
 LIB=../lib
 FILES=
-TEST_TEMPLATE_PARSER_FILES=parser/template/parser.c parser/template/parser.test.c $(LIB)/string.c $(LIB)/option.c
+TEST_TEMPLATE_PARSER_FILES=parser/template/parser.c parser/template/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
+TEST_FILE_PARSER_FILES=parser/file/parser.c parser/file/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
 
 all: rebuild
 
@@ -36,3 +37,9 @@ test_template_parser:
 	rm -rf test_template_parser_test*
 	rm template.txt
 	rm template2.txt
+
+test_file_parser:
+	rm -rf test_file_parser_test*
+	$(CC) $(CFLAGS) $(TEST_FILE_PARSER_FILES) -o test_file_parser_test
+	./test_file_parser_test
+	rm -rf test_file_parser_test*

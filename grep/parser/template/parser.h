@@ -6,6 +6,7 @@ typedef struct {
 typedef struct {
 	int length;
 	char** values;
+	int hasAddTemplateOption;
 } t_template_parser;
 
 #define TEMPLATE_FILE_NOT_FOUND_ERROR 1001

@@ -1,25 +1,12 @@
 #include "./parser.h"
 #include "../../../lib/string.h"
 #include "../../../lib/option.h"
+#include "../shared.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#define	IS_FILE_TEMPLATE 2
-#define IS_OPTION_TEMPLATE 1
 #define FILE_BUFFER_LENGTH 1024
-
-int isAddTemplateOption(const char* param) {
-	int result = 0;
-
-	if (isOption(param) && strIncludeSym((char*)param, 'e')) {
-		result = IS_OPTION_TEMPLATE;
-	} else if (isOption(param) && strIncludeSym((char*)param, 'f')) {
-		result = IS_FILE_TEMPLATE;
-	}
-
-	return result;
-}
 
 void pushTemplate(t_template_parser* template, char* value) {
 	template->values[template->length] = value;
@@ -49,14 +36,14 @@ t_template_parse_error parseTemplateFromFile(const char* fileName, t_template_pa
 t_template_parse_error parseGrepTemplate(int argc, char** argv, t_template_parser* template, int maxTemplateCount) {
 	t_template_parse_error error = {0, NULL};
 	template->length = 0;
+	template->hasAddTemplateOption = 0;
 	template->values = malloc(maxTemplateCount);
-	int isHasTemplateAddOption = 0;
 
 	for (int i = 1; i < argc && !error.code; i++) {
 		const char* param = argv[i];
 		int code = isAddTemplateOption(param);
 		if (!code) continue;
-		isHasTemplateAddOption = 1;
+		template->hasAddTemplateOption = 1;
 		if (code && i >= argc - 1) {
 			error.code = TEMPLATE_INVALID_ADDED_TEMPLATE;
 		} else if (code == IS_OPTION_TEMPLATE) {
@@ -66,7 +53,7 @@ t_template_parse_error parseGrepTemplate(int argc, char** argv, t_template_parse
 		}
 	}
 
-	if (!isHasTemplateAddOption) {
+	if (!template->hasAddTemplateOption) {
 		pushTemplate(template, strCopy(argv[1]));
 	}
 
