@@ -5,6 +5,7 @@ LIB=../lib
 FILES=
 TEST_TEMPLATE_PARSER_FILES=parser/template/parser.c parser/template/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
 TEST_FILE_PARSER_FILES=parser/file/parser.c parser/file/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
+TEST_OPTION_PARSER_FILES=parser/option/parser.c parser/option/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
 
 all: rebuild
 
@@ -43,3 +44,9 @@ test_file_parser:
 	$(CC) $(CFLAGS) $(TEST_FILE_PARSER_FILES) -o test_file_parser_test
 	./test_file_parser_test
 	rm -rf test_file_parser_test*
+
+test_option_parser:
+	rm -rf test_option_parser_test*
+	$(CC) $(CFLAGS) $(TEST_OPTION_PARSER_FILES) -o test_option_parser_test
+	./test_option_parser_test
+	rm -rf test_option_parser_test*
