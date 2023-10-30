@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Werror -Wextra
 RESULT=grep
 LIB=../lib
-FILES=
+FILES=main.c grep.c $(LIB)/string.c $(LIB)/option.c parser/shared.c parser/template/parser.c parser/file/parser.c parser/option/parser.c parser/index.c
 TEST_TEMPLATE_PARSER_FILES=parser/template/parser.c parser/template/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
 TEST_FILE_PARSER_FILES=parser/file/parser.c parser/file/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
 TEST_OPTION_PARSER_FILES=parser/option/parser.c parser/option/parser.test.c parser/shared.c $(LIB)/string.c $(LIB)/option.c
@@ -28,7 +28,7 @@ check:
 	clang-format -n *.c
 
 clean:
-	rm -rf grep*
+	rm -rf grep
 
 test_template_parser:
 	rm -rf test_template_parser_test*

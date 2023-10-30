@@ -15,6 +15,6 @@ typedef struct {
 	char* message;
 } t_grep_error;
 
-void grepParserErrorHandler(int code, char* message);
-t_grep_error grepParser(int argc, const char** argv, t_grep_parse* grepParser);
-void freeGrepParse(t_grep_parse* grepParser);
+void grepParserErrorHandler(t_grep_error* error);
+t_grep_error grepParser(int argc, const char** argv, t_grep_parse* grepData);
+void freeGrepParse(t_grep_parse* grepData);

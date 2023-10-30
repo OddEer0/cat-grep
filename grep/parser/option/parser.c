@@ -72,6 +72,8 @@ t_option_parser_error parseGrepOption(int argc, const char** argv, t_option_pars
 
 	optionPriority(&tmpOption);
 
+	if (tmpOption.o && tmpOption.v) error.code = PARSER_NOT_WORK;
+
 	*option = tmpOption;
 	return error;
 }

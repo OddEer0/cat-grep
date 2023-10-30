@@ -15,5 +15,6 @@ typedef struct {
 } t_option_parser;
 
 #define PARSER_OPTION_NOT_FOUND 3001
+#define PARSER_NOT_WORK 3002
 
 t_option_parser_error parseGrepOption(int argc, const char** argv, t_option_parser* option);
