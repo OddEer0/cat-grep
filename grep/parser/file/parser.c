@@ -3,6 +3,7 @@
 #include "../../../lib/option.h"
 #include "../../../lib/string.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void pushFile(t_file_parser* files, char* value) {
 	files->values[files->length] = value;
@@ -12,7 +13,7 @@ void pushFile(t_file_parser* files, char* value) {
 t_file_parser_error parserGrepFile(int argc, const char** argv, t_file_parser* files, int hasAddTemplateOption) {
 	t_file_parser_error error = {0};
 	files->length = 0;
-	files->values = malloc(argc - 2 - hasAddTemplateOption);
+	files->values = malloc(argc * sizeof(char*));
 	
 	for (int i = 1 + !hasAddTemplateOption; i < argc; i++) {
 		const char* param = argv[i];
@@ -29,7 +30,11 @@ t_file_parser_error parserGrepFile(int argc, const char** argv, t_file_parser* f
 
 void freeParseFile(t_file_parser* files) {
 	for (int i = 0; i < files->length; i++) {
-		free(files->values[i]);
+		if (files->values[i] != NULL) {
+			free(files->values[i]);
+		}
 	}
-	free(files->values);
+	if (files != NULL) {
+		free(files->values);
+	}
 }

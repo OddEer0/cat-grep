@@ -13,6 +13,13 @@ void pushTemplate(t_template_parser* template, char* value) {
 	template->length++;
 }
 
+void removeNextLineSymbol(char* str) {
+	size_t length = strlen(str);
+	if (str[length - 1] == '\n') {
+		str[strlen(str) - 1] = '\0';
+	}
+}
+
 t_template_parse_error parseTemplateFromFile(const char* fileName, t_template_parser* template) {
 	t_template_parse_error error = {0};
 	FILE *file = fopen(fileName, "r");
@@ -26,14 +33,14 @@ t_template_parse_error parseTemplateFromFile(const char* fileName, t_template_pa
 	char buff[FILE_BUFFER_LENGTH];
 	while(fgets(buff, FILE_BUFFER_LENGTH, file)) {
 		char *tmp = strCopy(buff);
-		tmp[strlen(tmp) - 1] = '\0';
+		removeNextLineSymbol(tmp);
 		pushTemplate(template, tmp);
 	}
 
 	return error;
 }
 
-t_template_parse_error parseGrepTemplate(int argc, char** argv, t_template_parser* template, int maxTemplateCount) {
+t_template_parse_error parseGrepTemplate(int argc, const char** argv, t_template_parser* template, int maxTemplateCount) {
 	t_template_parse_error error = {0, NULL};
 	template->length = 0;
 	template->hasAddTemplateOption = 0;
@@ -54,7 +61,7 @@ t_template_parse_error parseGrepTemplate(int argc, char** argv, t_template_parse
 	}
 
 	if (!template->hasAddTemplateOption) {
-		pushTemplate(template, strCopy(argv[1]));
+		pushTemplate(template, strCopy((char*)argv[1]));
 	}
 
 	return error;
