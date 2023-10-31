@@ -14,12 +14,17 @@ t_file_parser_error parserGrepFile(int argc, const char** argv, t_file_parser* f
 	t_file_parser_error error = {0};
 	files->length = 0;
 	files->values = malloc(argc * sizeof(char*));
+	int hasTemplate = hasAddTemplateOption;
 	
-	for (int i = 1 + !hasAddTemplateOption; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		const char* param = argv[i];
 		if (isAddTemplateOption(param)) i++;
 		if (isOption(param)) continue;
-		pushFile(files, strCopy((char*)param));
+		if (!hasTemplate) {
+			hasTemplate = 1;
+		} else {
+			pushFile(files, strCopy((char*)param));
+		}
 	}
 
 	if (!files->length) 

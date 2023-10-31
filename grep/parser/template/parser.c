@@ -44,7 +44,7 @@ t_template_parse_error parseGrepTemplate(int argc, const char** argv, t_template
 	t_template_parse_error error = {0, NULL};
 	template->length = 0;
 	template->hasAddTemplateOption = 0;
-	template->values = malloc(maxTemplateCount);
+	template->values = malloc(maxTemplateCount * sizeof(char*));
 
 	for (int i = 1; i < argc && !error.code; i++) {
 		const char* param = argv[i];
@@ -61,9 +61,11 @@ t_template_parse_error parseGrepTemplate(int argc, const char** argv, t_template
 	}
 
 	if (!template->hasAddTemplateOption) {
-		for (int i = 1; i < argc; i++) {
+		int isHas = 0;
+		for (int i = 1; i < argc && !isHas; i++) {
 			const char* param = argv[i];
 			if (!isOption(param)) {
+				isHas = 1;
 				pushTemplate(template, strCopy((char*)param));
 			}
 		}

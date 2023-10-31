@@ -77,7 +77,8 @@ void grepFile(const char* fileName, t_grep_parse* grepData) {
 	int line = 0, successCount = 0;
 	while(fgets(buff, BUFFER_SIZE, file)) {
 		line++;
-		printFn(fileName, grepData, &successCount, buff, line);
+		if (buff[0] != '\n')
+			printFn(fileName, grepData, &successCount, buff, line);
 	}
 
 	if (grepData->option->c) {
