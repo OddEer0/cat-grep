@@ -1,6 +1,0 @@
-main.c:	// for (int i = 0; i < grepData.files->length; i++) {
-Makefile:format:
-Makefile:	clang-format -i *.h
-Makefile:	clang-format -i *.c
-Makefile:	clang-format -n *.h
-Makefile:	clang-format -n *.c
