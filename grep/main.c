@@ -1,6 +1,8 @@
 #include "./main.h"
-#include "./grep.h"
+
 #include <stdio.h>
+
+#include "./grep.h"
 
 int main(int argc, const char *argv[]) {
   t_grep_parse grepData;

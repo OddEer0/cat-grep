@@ -1,4 +1,5 @@
 #include "./grep.h"
+
 #include <regex.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,11 +11,9 @@ void printFnHelper(const char *fileName, t_grep_parse *grepData, int line,
   if (!grepData->option->c && !grepData->option->l) {
     if (grepData->files->length > 1 && !grepData->option->h)
       printf("%s:", fileName);
-    if (grepData->option->n)
-      printf("%d:", line);
+    if (grepData->option->n) printf("%d:", line);
     printf("%s", buff);
-    if (buff[strlen(buff) - 1] != '\n')
-      printf("\n");
+    if (buff[strlen(buff) - 1] != '\n') printf("\n");
   }
 }
 
@@ -30,8 +29,7 @@ void printO(const char *fileName, t_grep_parse *grepData, char *buff, int line,
 
     if (grepData->files->length > 1 && !grepData->option->h)
       printf("%s:", fileName);
-    if (grepData->option->n)
-      printf("%d:", line);
+    if (grepData->option->n) printf("%d:", line);
     for (int j = 0; j < length; j++) {
       printf("%c", *(buff + off + j));
     }
@@ -59,8 +57,7 @@ void printFn(const char *fileName, t_grep_parse *grepData, int *successCount,
       printO(fileName, grepData, buff, line, &regex);
     } else {
       result = regexec(&regex, buff, 0, NULL, 0);
-      if (!result && grepData->option->v)
-        isSuccessInvert = 0;
+      if (!result && grepData->option->v) isSuccessInvert = 0;
       if ((!result && !grepData->option->v) ||
           (isSuccessInvert && result && grepData->option->v &&
            i == grepData->templates->length - 1)) {
@@ -75,16 +72,14 @@ void printFn(const char *fileName, t_grep_parse *grepData, int *successCount,
 }
 
 void printCFn(const char *fileName, int filesCount, int successCount, int isH) {
-  if (filesCount > 1 && !isH)
-    printf("%s:", fileName);
+  if (filesCount > 1 && !isH) printf("%s:", fileName);
   printf("%d\n", successCount);
 }
 
 void grepFile(const char *fileName, t_grep_parse *grepData) {
   FILE *file = fopen(fileName, "r");
   if (file == NULL) {
-    if (!grepData->option->s)
-      fprintf(stderr, "%s: file not found\n", fileName);
+    if (!grepData->option->s) fprintf(stderr, "%s: file not found\n", fileName);
     ;
     return;
   }

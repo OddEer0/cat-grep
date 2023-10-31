@@ -1,4 +1,5 @@
 #include "./shared.h"
+
 #include <stdio.h>
 
 void isAddTemplateOptionTest();

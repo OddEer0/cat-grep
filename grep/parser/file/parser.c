@@ -1,9 +1,11 @@
 #include "./parser.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "../../../lib/option.h"
 #include "../../../lib/string.h"
 #include "../shared.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void pushFile(t_file_parser *files, char *value) {
   files->values[files->length] = value;
@@ -20,10 +22,8 @@ t_file_parser_error parserGrepFile(int argc, const char **argv,
 
   for (int i = 1; i < argc; i++) {
     const char *param = argv[i];
-    if (isAddTemplateOption(param))
-      i++;
-    if (isOption(param))
-      continue;
+    if (isAddTemplateOption(param)) i++;
+    if (isOption(param)) continue;
     if (!hasTemplate) {
       hasTemplate = 1;
     } else {
@@ -31,17 +31,14 @@ t_file_parser_error parserGrepFile(int argc, const char **argv,
     }
   }
 
-  if (!files->length)
-    error.code = PARSER_NOT_FILE_ERROR;
+  if (!files->length) error.code = PARSER_NOT_FILE_ERROR;
 
   return error;
 }
 
 void freeParseFile(t_file_parser *files) {
   for (int i = 0; i < files->length; i++) {
-    if (files->values[i] != NULL)
-      free(files->values[i]);
+    if (files->values[i] != NULL) free(files->values[i]);
   }
-  if (files != NULL)
-    free(files->values);
+  if (files != NULL) free(files->values);
 }

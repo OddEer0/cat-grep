@@ -1,4 +1,5 @@
 #include "./parser.h"
+
 #include "../../../lib/option.h"
 #include "../../../lib/string.h"
 #include "../shared.h"
@@ -14,30 +15,30 @@ int parseParamOption(const char *param, t_option_parser *option) {
       continue;
     }
     switch (*tmp) {
-    case 'i':
-      option->i = 1;
-      break;
-    case 'v':
-      option->v = 1;
-      break;
-    case 'c':
-      option->c = 1;
-      break;
-    case 'l':
-      option->l = 1;
-      break;
-    case 'n':
-      option->n = 1;
-      break;
-    case 'h':
-      option->h = 1;
-      break;
-    case 's':
-      option->s = 1;
-      break;
-    case 'o':
-      option->o = 1;
-      break;
+      case 'i':
+        option->i = 1;
+        break;
+      case 'v':
+        option->v = 1;
+        break;
+      case 'c':
+        option->c = 1;
+        break;
+      case 'l':
+        option->l = 1;
+        break;
+      case 'n':
+        option->n = 1;
+        break;
+      case 'h':
+        option->h = 1;
+        break;
+      case 's':
+        option->s = 1;
+        break;
+      case 'o':
+        option->o = 1;
+        break;
     }
     tmp++;
   }
@@ -62,10 +63,8 @@ t_option_parser_error parseGrepOption(int argc, const char **argv,
   for (int i = 1; i < argc && !error.code; i++) {
     const char *param = argv[i];
 
-    if (!isOption(param))
-      continue;
-    if (isAddTemplateOption(param))
-      i++;
+    if (!isOption(param)) continue;
+    if (isAddTemplateOption(param)) i++;
     int errorCode = parseParamOption(param, &tmpOption);
     if (errorCode) {
       error.code = errorCode;
@@ -75,8 +74,7 @@ t_option_parser_error parseGrepOption(int argc, const char **argv,
 
   optionPriority(&tmpOption);
 
-  if (tmpOption.o && tmpOption.v)
-    error.code = PARSER_NOT_WORK;
+  if (tmpOption.o && tmpOption.v) error.code = PARSER_NOT_WORK;
 
   *option = tmpOption;
   return error;

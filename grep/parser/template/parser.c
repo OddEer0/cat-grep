@@ -1,10 +1,12 @@
 #include "./parser.h"
-#include "../../../lib/option.h"
-#include "../../../lib/string.h"
-#include "../shared.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../../lib/option.h"
+#include "../../../lib/string.h"
+#include "../shared.h"
 
 #define FILE_BUFFER_LENGTH 1024
 
@@ -52,8 +54,7 @@ t_template_parse_error parseGrepTemplate(int argc, const char **argv,
   for (int i = 1; i < argc && !error.code; i++) {
     const char *param = argv[i];
     int code = isAddTemplateOption(param);
-    if (!code)
-      continue;
+    if (!code) continue;
     template->hasAddTemplateOption = 1;
     if (code && i >= argc - 1) {
       error.code = TEMPLATE_INVALID_ADDED_TEMPLATE;
@@ -80,9 +81,7 @@ t_template_parse_error parseGrepTemplate(int argc, const char **argv,
 
 void freeGrepTemplate(t_template_parser *template) {
   for (int i = 0; i < template->length; i++) {
-    if (template->values[i] != NULL)
-      free(template->values[i]);
+    if (template->values[i] != NULL) free(template->values[i]);
   }
-  if (template->values != NULL)
-    free(template->values);
+  if (template->values != NULL) free(template->values);
 }
