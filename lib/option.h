@@ -1,1 +1,1 @@
-int isOption(const char* param);
+int isOption(const char *param);
