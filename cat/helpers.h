@@ -1,0 +1,1 @@
+int isGnu(const char *arg);
